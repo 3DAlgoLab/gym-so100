@@ -172,18 +172,18 @@ class Base(gym.Env):
     @property
     def eef(self):
         return (
-            self._utils.get_site_xpos(self.model, self.data, "grasp")
+            self._utils.get_site_xpos(self.model, self.data, "Fixed_Jaw")
             - self.center_of_table
         )
 
     @property
     def eef_velp(self):
-        return self._utils.get_site_xvelp(self.model, self.data, "grasp") * self.dt
+        return self._utils.get_site_xvelp(self.model, self.data, "Fixed_Jaw") * self.dt
 
     @property
     def gripper_angle(self):
         return self._utils.get_joint_qpos(
-            self.model, self.data, "right_outer_knuckle_joint"
+            self.model, self.data, "Jaw"
         )
 
     @property
@@ -318,7 +318,7 @@ class Base(gym.Env):
         action = action.copy()
         pos_ctrl, gripper_ctrl = action[:3], action[3]
         pos_ctrl = self._limit_gripper(
-            self._utils.get_site_xpos(self.model, self.data, "grasp"), pos_ctrl
+            self._utils.get_site_xpos(self.model, self.data, "Fixed_Jaw"), pos_ctrl
         ) * (1 / self.n_substeps)
         gripper_ctrl = np.array([gripper_ctrl, gripper_ctrl])
         mocap.apply_action(
@@ -333,7 +333,8 @@ class Base(gym.Env):
         self._utils.set_mocap_quat(
             self.model, self.data, "robot0:mocap2", gripper_rotation
         )
-        self._utils.set_joint_qpos(self.model, self.data, "right_outer_knuckle_joint", 0)
+        # self._utils.set_joint_qpos(self.model, self.data, "right_outer_knuckle_joint", 0)
+        self._utils.set_joint_qpos(self.model, self.data, "Jaw", 0)
         self.data.qpos[10] = 0.0
         self.data.qpos[12] = 0.0
 
