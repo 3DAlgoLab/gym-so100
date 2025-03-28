@@ -12,7 +12,7 @@
     <geom conaffinity="0" contype="0" pos="0 0 0" rgba="0.5 0.5 0 0" size="0.005 0.005 1" type="box" />
   </body>
 
-  <body name="Base" childclass="so_arm100">
+  <body name="Base" childclass="so_arm100" pos="1.09 0.28 0.5490">
     <geom type="mesh" mesh="Base" class="visual" />
     <geom type="mesh" mesh="Base_Motor" class="motor_visual" />
     <geom type="mesh" mesh="Base" class="collision" />
